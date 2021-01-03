@@ -1,23 +1,18 @@
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-import { makeStyles } from "@material-ui/core/styles";
-
+import MaterialTable from "material-table";
+import { AddBox, ArrowDownward } from "@material-ui/icons";
 import { useState, useEffect } from "react";
 const axios = require("axios");
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-});
+function TableComponent2() {
+  const [columns, setColumns] = useState([
+    { title: "Company Name", field: "name" },
+    { title: "Description", field: "desc" },
+    { title: "Amount", field: "amount", type: "numeric" },
+    { title: "Total Rough", field: "total_rough", type: "numeric" },
+    { title: "Date Given", field: "date_given", type: "date" },
+    { title: "Date Received", field: "date_received", type: "date" },
+  ]);
 
-function TableComponent() {
-  const classes = useStyles();
   const [records, setRecords] = useState([]);
   const [hasError, setHasError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -35,52 +30,94 @@ function TableComponent() {
         setLoading(false);
       });
   }, []);
-  let test;
-  if (loading) {
-    test = <h1>Loading...</h1>;
-  } else {
-    test = (
-      <div>
-        <TableContainer
-          component={Paper}
-          style={{
-            width: "90vw",
-            marginLeft: "5vw",
-            border: "none",
-            boxShadow: "none",
-          }}
-        >
-          <Table className={classes.table} aria-label="simple table">
-            <TableHead>
-              <TableRow key={new Date()}>
-                <TableCell align="center">Company name</TableCell>
-                <TableCell align="center">Total rough</TableCell>
-                <TableCell align="center">Date given</TableCell>
-                <TableCell align="center">Date received</TableCell>
-                <TableCell align="center">Decription</TableCell>
-                <TableCell align="center">Amount/Quantity</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {records.map((record) => (
-                <TableRow key={record.index}>
-                  <TableCell component="th" scope="row">
-                    {record.name}
-                  </TableCell>
-                  <TableCell align="center">{record.total_rough}</TableCell>
-                  <TableCell align="center">{record.date_given}</TableCell>
-                  <TableCell align="center">{record.date_received}</TableCell>
-                  <TableCell align="center">{record.desc}</TableCell>
-                  <TableCell align="center">{record.amount}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
-    );
-  }
-  return <div className="App">{test}</div>;
+
+  return (
+    <div style={{}}>
+      <MaterialTable
+        title="Records"
+        columns={columns}
+        data={records}
+        editable={{
+          onRowAdd: (newData) =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                setRecords([...records, newData]);
+                axios({
+                  method: "post",
+                  url: "http://localhost:5000/api/records/",
+                  mode: "cors",
+                  data: {
+                    name: newData.name,
+                    amount: newData.amount,
+                    date_given: new Date(newData.date_given),
+                    date_received: new Date(newData.date_received),
+                    total_rough: newData.total_rough,
+                    desc: newData.desc,
+                  },
+                })
+                  .then((res) => {
+                    console.log("Success status", res.data.success);
+                  })
+                  .catch((err) => {
+                    console.error(err);
+                  });
+                resolve();
+              }, 1000);
+            }),
+          onRowUpdate: (newData, oldData) =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                const dataUpdate = [...records];
+                const index = oldData.tableData.id;
+                dataUpdate[index] = newData;
+                axios({
+                  method: "post",
+                  url: `http://localhost:5000/api/records/update/${oldData._id}`,
+                  mode: "cors",
+                  data: {
+                    name: newData.name,
+                    amount: newData.amount,
+                    date_given: new Date(newData.date_given),
+                    date_received: new Date(newData.date_received),
+                    total_rough: newData.total_rough,
+                    desc: newData.desc,
+                  },
+                })
+                  .then((res) => {
+                    console.log("Success status", res.data.success);
+                  })
+                  .catch((err) => {
+                    console.error(err);
+                  });
+                setRecords([...dataUpdate]);
+                resolve();
+              }, 1000);
+            }),
+          onRowDelete: (oldData) =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                const dataDelete = [...records];
+                const index = oldData.tableData.id;
+                dataDelete.splice(index, 1);
+                axios
+                  .delete(`/api/records/${oldData._id}`, { mode: "cors" })
+                  .then((res) => {
+                    console.log("Success status", res.data.success);
+                  })
+                  .catch((err) => console.error(err));
+                setRecords([...dataDelete]);
+                resolve();
+              }, 1000);
+            }),
+        }}
+        options={{
+          rowStyle: {
+            backgroundColor: "#EEE",
+          },
+        }}
+      />
+    </div>
+  );
 }
 
-export default TableComponent;
+export default TableComponent2;

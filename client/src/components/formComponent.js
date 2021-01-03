@@ -28,14 +28,12 @@ function FormComponent() {
       method: "post",
       url: "http://localhost:5000/api/records/",
       mode: "cors",
-      headers: {
-        "Content-Type": "application/json; charset=UTF-8",
-      },
+
       data: {
         name: companyName,
         amount: amount,
-        date_given: dateGiven,
-        date_received: dateReceived,
+        date_given: new Date(dateGiven),
+        date_received: new Date(dateReceived),
         total_rough: totalRough,
         desc: description,
       },

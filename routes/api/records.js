@@ -3,11 +3,11 @@ const router = express.Router();
 const Record = require("../../models/Record");
 
 router.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
   res.header(
-    "Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept"
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
   );
-  res.header("Access-Control-Allow-Methods: GET, POST, PUT");
   next();
 });
 
@@ -34,6 +34,30 @@ router.post("/", (req, res) => {
   newRecord.save().then((record) => {
     res.json(record);
   });
+});
+
+// @route POST '/api/records/update/:id'
+router.post("/update/:id", (req, res) => {
+  Record.updateOne(
+    { _id: req.params.id },
+    {
+      $set: {
+        name: req.body.name,
+        desc: req.body.desc,
+        date_given: req.body.date_given,
+        date_received: req.body.date_received,
+        amount: req.body.amount,
+        total_rough: req.body.total_rough,
+      },
+    },
+    function (err, record) {
+      if (err) {
+        res.send(err);
+      } else {
+        res.json({ success: "Record updated!" });
+      }
+    }
+  );
 });
 
 // @route DELETE record by id

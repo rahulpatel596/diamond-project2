@@ -5,7 +5,6 @@ import TableComponent from "./components/tableComponent";
 function App() {
   return (
     <div className="App">
-      <FormComponent />
       <TableComponent />
     </div>
   );
