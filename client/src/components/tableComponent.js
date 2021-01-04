@@ -20,7 +20,9 @@ function TableComponent2() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:5000/api/records/", { mode: "cors" })
+      .get("https://my-diamond-react.uc.r.appspot.com/api/records/", {
+        mode: "cors",
+      })
       .then((res) => {
         setRecords(res.data);
         setLoading(false);
@@ -44,7 +46,7 @@ function TableComponent2() {
                 setRecords([...records, newData]);
                 axios({
                   method: "post",
-                  url: "http://localhost:5000/api/records/",
+                  url: "https://my-diamond-react.uc.r.appspot.com/api/records/",
                   mode: "cors",
                   data: {
                     name: newData.name,
@@ -72,7 +74,7 @@ function TableComponent2() {
                 dataUpdate[index] = newData;
                 axios({
                   method: "post",
-                  url: `http://localhost:5000/api/records/update/${oldData._id}`,
+                  url: `https://my-diamond-react.uc.r.appspot.com/api/records/update/${oldData._id}`,
                   mode: "cors",
                   data: {
                     name: newData.name,
@@ -100,7 +102,10 @@ function TableComponent2() {
                 const index = oldData.tableData.id;
                 dataDelete.splice(index, 1);
                 axios
-                  .delete(`/api/records/${oldData._id}`, { mode: "cors" })
+                  .delete(
+                    `https://my-diamond-react.uc.r.appspot.com/api/records/${oldData._id}`,
+                    { mode: "cors" }
+                  )
                   .then((res) => {
                     console.log("Success status", res.data.success);
                   })
