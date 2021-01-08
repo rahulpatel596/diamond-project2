@@ -2,15 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Record = require("../../models/Record");
 
-router.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
-
 // @route GET '/api/records'
 // @desc Getting all records
 router.get("/", (req, res) => {
