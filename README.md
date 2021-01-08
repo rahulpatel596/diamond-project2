@@ -1,5 +1,5 @@
 # diamond-project2
-MERN (MONGODB, ExpressJ, ReactJS, Node.js) Stack app
+MERN (MONGODB, ExpressJS, ReactJS, Node.js) Stack app
 
 **Project simply tracks certain numeric data, dates and names other relevant information. This project was created for a specific usecase.**
 
