@@ -1,7 +1,11 @@
 # diamond-project2
 MERN (MONGODB, ExpressJS, ReactJS, Node.js) Stack app
 
-**Project simply tracks certain numeric data, dates and names other relevant information. This project was created for a specific usecase.**
+App is hosted on GCP(Google Cloud platform)
+MongoDB Atlas used for Database service
+Used Material-UI library
+
+**Project simply tracks certain numeric data, dates and names other relevant information. This project is created with a specific usecase.**
 
 # Installing required dependecies
 ### `npm install`
