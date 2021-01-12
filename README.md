@@ -2,7 +2,9 @@
 MERN (MONGODB, ExpressJS, ReactJS, Node.js) Stack app
 
 App is hosted on GCP(Google Cloud platform)
+
 MongoDB Atlas used for Database service
+
 Used Material-UI library
 
 **Project simply tracks certain numeric data, dates and names other relevant information. This project is created with a specific usecase.**
