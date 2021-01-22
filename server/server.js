@@ -37,7 +37,7 @@ app.get("/record", (req, res) => {
 
 app.use("/api/records", records);
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8000;
 
 app.listen(port, () => {
   console.log(`server started on ${port}`);

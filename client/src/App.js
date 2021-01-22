@@ -1,6 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import FormComponent from "./components/formComponent";
-import TableComponent from "./components/tableComponent";
+import TableComponent from "./components/TableComponent";
 
 function App() {
   return (

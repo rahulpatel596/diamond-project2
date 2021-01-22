@@ -5,7 +5,7 @@ const axios = require("axios");
 
 function TableComponent2() {
   const [columns, setColumns] = useState([
-    { title: "Company Name", field: "name" },
+    { title: "Asort", field: "name" },
     { title: "Description", field: "desc" },
     { title: "Amount", field: "amount", type: "numeric" },
     { title: "Total Rough", field: "total_rough", type: "numeric" },
@@ -20,7 +20,7 @@ function TableComponent2() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("https://my-diamond-react.uc.r.appspot.com/api/records/", {
+      .get("http://localhost:8000/api/records/", {
         mode: "cors",
       })
       .then((res) => {
@@ -46,7 +46,7 @@ function TableComponent2() {
                 setRecords([...records, newData]);
                 axios({
                   method: "post",
-                  url: "https://my-diamond-react.uc.r.appspot.com/api/records/",
+                  url: "http://localhost:8000/api/records/",
                   mode: "cors",
                   data: {
                     name: newData.name,
@@ -74,7 +74,7 @@ function TableComponent2() {
                 dataUpdate[index] = newData;
                 axios({
                   method: "post",
-                  url: `https://my-diamond-react.uc.r.appspot.com/api/records/update/${oldData._id}`,
+                  url: `http://localhost:8000/api/records/update/${oldData._id}`,
                   mode: "cors",
                   data: {
                     name: newData.name,
@@ -102,10 +102,9 @@ function TableComponent2() {
                 const index = oldData.tableData.id;
                 dataDelete.splice(index, 1);
                 axios
-                  .delete(
-                    `https://my-diamond-react.uc.r.appspot.com/api/records/${oldData._id}`,
-                    { mode: "cors" }
-                  )
+                  .delete(`http://localhost:8000/api/records/${oldData._id}`, {
+                    mode: "cors",
+                  })
                   .then((res) => {
                     console.log("Success status", res.data.success);
                   })
