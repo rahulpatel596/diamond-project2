@@ -1,0 +1,48 @@
+$primary-color: #0085ff;
+
+.lot-search-container {
+  display: flex;
+  justify-content: center;
+  font-family: FontAwesome;
+  align-items: center;
+  width: 60vw;
+  text-align: center;
+  height: 6vh;
+  border-radius: 10px;
+  background: #ffffff;
+  margin-left: 20vw;
+  margin-bottom: 10vh;
+  margin-top: 5vh;
+  box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px,
+    rgba(17, 17, 26, 0.05) 0px 8px 32px;
+  border: none;
+}
+form {
+  width: 100%;
+  height: 100%;
+}
+
+.lot-search-input {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  width: 90%;
+  border: none;
+  height: 100%;
+  text-align: center;
+}
+
+.lot-search-input:focus {
+  outline: none;
+  box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px,
+    rgba(17, 17, 26, 0.05) 0px 8px 32px;
+}
+
+.lot-search-button {
+  border: none;
+  background: $primary-color;
+  color: white;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  height: 100%;
+  width: 10%;
+}

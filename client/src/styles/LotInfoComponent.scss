@@ -1,0 +1,59 @@
+$primary-color: #0085ff;
+$secondary-color: #23374d;
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background: white;
+}
+.lot-outer-container {
+  margin-left: 15vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.lot-info-container {
+  box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px,
+    rgba(17, 17, 26, 0.05) 0px 8px 32px;
+  margin-bottom: 3vh;
+  width: 70vw;
+  height: 17vh;
+  background: white;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  animation: fadeIn ease 1.5s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.lot-info-left {
+  margin-left: 2vw;
+  justify-content: center;
+  display: flex;
+  color: $secondary-color;
+  flex-direction: column;
+}
+
+.lot-info-right {
+  margin-right: 2vw;
+  display: flex;
+  align-items: center;
+}
+
+.lot-info-lotNumber {
+  color: $primary-color;
+  font-weight: bold;
+}
+
+.lot-info-totalCarat {
+  font-weight: bold;
+  color: $secondary-color;
+  font-size: 1.2rem;
+}
