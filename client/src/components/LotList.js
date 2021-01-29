@@ -1,6 +1,12 @@
 import LotInfoComponent from "./LotInfoComponent";
 import "../styles/LotInfoComponent.scss";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams,
+} from "react-router-dom";
 import { useState, useEffect } from "react";
 import SearchComponent from "./SearchComponent";
 import AsorterComponent from "./AsorterComponent";
@@ -12,6 +18,8 @@ function LotList() {
   const [loading, setLoading] = useState(false);
   const [CompanyNames, setCompanyNames] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentLot, setCurrentLot] = useState({});
+  const [ReceivedLotInfo, setReceivedLotInfo] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -21,7 +29,6 @@ function LotList() {
       })
       .then((res) => {
         setRecords(res.data);
-        console.log(res.data);
         {
           res.data.map((lot) => {
             setCompanyNames([...CompanyNames, lot.CompanyName]);
@@ -39,6 +46,7 @@ function LotList() {
     setSearchTerm(dataFromChild);
     console.log(dataFromChild);
   };
+
   return (
     <Router>
       <Switch>
@@ -66,18 +74,23 @@ function LotList() {
                 })
                 .map((lot) => (
                   <div>
-                    <LotInfoComponent lot={lot} />
+                    <Link
+                      onClick={() => {
+                        setCurrentLot(lot);
+                        setReceivedLotInfo(true);
+                      }}
+                      to={`/asorter/${lot._id}`}
+                    >
+                      <LotInfoComponent lot={lot} />
+                    </Link>
                   </div>
                 ))}
             </div>
           </div>
         </Route>
-        <Route
-          path="/asorter/:id"
-          render={(props) => {
-            return <AsorterComponent />;
-          }}
-        />
+        <Route path="/asorter/:id">
+          <AsorterComponent currentLot={currentLot} />
+        </Route>
       </Switch>
     </Router>
   );

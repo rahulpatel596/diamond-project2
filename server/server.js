@@ -1,9 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const records = require("./routes/api/records");
+const records = require("./routes/api/v2/records");
 const cors = require("cors");
-const Record = require("./models/Record");
+const RecordV2 = require("./models/RecordV2");
 const app = express();
 const mongodb = require("mongodb");
 app.use(cors());
@@ -12,7 +12,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 //Connecting MONGODB Atlas
-const db = require("./config/keys").MONGODB_URI;
+const db = require("./config/keys").MONGODB_URI2;
 
 mongoose
   .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -22,20 +22,20 @@ mongoose
   .catch((err) => {
     console.error(err);
   });
-app.get("/", (req, res) => {
+
+app.get("/v2/", (req, res) => {
   res.send("hello world");
   res.status(200);
-  np;
   res.end();
 });
 
-app.get("/record", (req, res) => {
-  Record.find({}).then((records) => {
+app.get("/v2/record", (req, res) => {
+  RecordV2.find({}).then((records) => {
     res.json(records);
   });
 });
 
-app.use("/api/records", records);
+app.use("/v2/api/records", records);
 
 const port = process.env.PORT || 8000;
 

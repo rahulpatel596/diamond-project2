@@ -22,7 +22,6 @@ function SearchComponent(props) {
           onChange={handleChange}
           className="lot-search-input"
           placeholder="Search"
-          onFocus="this.placeholder = ''"
         ></input>
         <button className="lot-search-button" type="submit">
           &#xF002;
