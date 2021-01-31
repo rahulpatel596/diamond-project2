@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const records = require("./routes/api/v2/records");
+const asorter = require("./routes/api/v2/asorter");
 const cors = require("cors");
 const RecordV2 = require("./models/RecordV2");
 const app = express();
@@ -36,6 +37,7 @@ app.get("/v2/record", (req, res) => {
 });
 
 app.use("/v2/api/records", records);
+app.use("/v2/api/asorter", asorter);
 
 const port = process.env.PORT || 8000;
 

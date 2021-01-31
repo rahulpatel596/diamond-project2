@@ -3,18 +3,6 @@ import { AddBox, ArrowDownward } from "@material-ui/icons";
 import { useState, useEffect } from "react";
 const axios = require("axios");
 
-// function AsorterComponent(props) {
-//   return (
-//     <div>
-//       {console.log(props.currentLot.Asorters[1])}
-
-//       {props.currentLot.Asorters.map((asorter) => (
-//         <h1>{asorter.AsorterName}</h1>
-//       ))}
-//     </div>
-//   );
-// }
-
 function AsorterComponent(props) {
   console.log(props);
   const [columns, setColumns] = useState([
@@ -31,7 +19,24 @@ function AsorterComponent(props) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setRecords(props.currentLot.Asorters);
+    if (props.currentLot._id == null) {
+      let idFromUrl = window.location.pathname.split("/")[2];
+      axios
+        .get(`http://localhost:8000/v2/api/asorter/${idFromUrl}`, {
+          mode: "cors",
+        })
+        .then((res) => {
+          console.log(res);
+          setRecords(res.data[0].Asorters);
+          setLoading(false);
+        })
+        .catch((err) => {
+          setHasError(true);
+          setLoading(false);
+        });
+    } else {
+      setRecords(props.currentLot.Asorters);
+    }
   }, []);
   return (
     <div style={{}}>
@@ -46,7 +51,8 @@ function AsorterComponent(props) {
                 setRecords([...records, newData]);
                 axios({
                   method: "post",
-                  url: "http://localhost:8000/api/records/",
+                  url:
+                    "http://localhost:8000/v2/api/asorter/add/${props.currentLot._id}",
                   mode: "cors",
                   data: {
                     name: newData.name,
@@ -74,15 +80,15 @@ function AsorterComponent(props) {
                 dataUpdate[index] = newData;
                 axios({
                   method: "post",
-                  url: `http://localhost:8000/api/records/update/${oldData._id}`,
+                  url: `http://localhost:8000/v2/api/asorter/update/${props.currentLot._id}/${oldData._id}`,
                   mode: "cors",
                   data: {
-                    name: newData.name,
-                    amount: newData.amount,
-                    date_given: new Date(newData.date_given),
-                    date_received: new Date(newData.date_received),
-                    total_rough: newData.total_rough,
-                    desc: newData.desc,
+                    AsorterName: newData.AsorterName,
+                    CaratGiven: newData.CaratGiven,
+                    DateGiven: newData.DateGiven,
+                    DateReceived: newData.DateReceived,
+                    CaratReceived: newData.CaratReceived,
+                    AdditionalDetails: newData.AdditionalDetails,
                   },
                 })
                   .then((res) => {
@@ -102,9 +108,12 @@ function AsorterComponent(props) {
                 const index = oldData.tableData.id;
                 dataDelete.splice(index, 1);
                 axios
-                  .delete(`http://localhost:8000/api/records/${oldData._id}`, {
-                    mode: "cors",
-                  })
+                  .delete(
+                    `http://localhost:8000/api/asorter/delete/${props.currentLot._id}/${oldData._id}`,
+                    {
+                      mode: "cors",
+                    }
+                  )
                   .then((res) => {
                     console.log("Success status", res.data.success);
                   })

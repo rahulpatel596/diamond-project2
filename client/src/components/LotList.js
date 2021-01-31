@@ -10,6 +10,7 @@ import {
 import { useState, useEffect } from "react";
 import SearchComponent from "./SearchComponent";
 import AsorterComponent from "./AsorterComponent";
+import Navbar from "./Navbar";
 const axios = require("axios");
 
 function LotList() {
@@ -51,6 +52,7 @@ function LotList() {
     <Router>
       <Switch>
         <Route exact path="/">
+          <Navbar />
           <span>Set up router first</span>
           <span>
             Work on Asorter component and then setup API routes for asorter/id
@@ -89,6 +91,7 @@ function LotList() {
           </div>
         </Route>
         <Route path="/asorter/:id">
+          <Navbar />
           <AsorterComponent currentLot={currentLot} />
         </Route>
       </Switch>

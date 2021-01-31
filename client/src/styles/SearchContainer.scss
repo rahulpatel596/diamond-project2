@@ -3,7 +3,7 @@ $primary-color: #0085ff;
 .lot-search-container {
   display: flex;
   justify-content: center;
-  font-family: FontAwesome;
+
   align-items: center;
   width: 60vw;
   text-align: center;
@@ -28,7 +28,7 @@ form {
   width: 90%;
   border: none;
   height: 100%;
-  text-align: center;
+  padding-left: 1rem;
 }
 
 .lot-search-input:focus {
@@ -38,6 +38,7 @@ form {
 }
 
 .lot-search-button {
+  font-family: FontAwesome;
   border: none;
   background: $primary-color;
   color: white;
