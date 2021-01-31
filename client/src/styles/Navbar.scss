@@ -1,0 +1,38 @@
+.nav {
+  height: 5vh;
+  top: 2px;
+}
+.navbar-container {
+  width: 80vw;
+  margin-left: 10vw;
+}
+.nav-ul {
+  display: flex;
+  flex-direction: row;
+  text-decoration: none;
+}
+
+.nav-link:first-of-type {
+  font-weight: bold;
+  flex: 3;
+}
+
+.nav-add-button button {
+  border: 1px solid #0085ff;
+  color: white;
+  background: transparent;
+  border-radius: 6px;
+  &:hover {
+    background: #0085ff;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+  }
+  a {
+    &:hover {
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+    }
+  }
+}

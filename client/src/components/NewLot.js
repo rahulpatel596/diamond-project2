@@ -1,48 +1,41 @@
+import Navbar from "./Navbar";
 import MaterialTable from "material-table";
 import { AddBox, ArrowDownward } from "@material-ui/icons";
 import { useState, useEffect } from "react";
 const axios = require("axios");
 
-function AsorterComponent(props) {
-  console.log(props);
+function NewLot(props) {
   const [columns, setColumns] = useState([
-    { title: "Asorter", field: "AsorterName" },
-    { title: "Description", field: "AdditionalDetails" },
-    { title: "Carats Given", field: "CaratGiven", type: "numeric" },
-    { title: "Carats Received", field: "CaratReceived", type: "numeric" },
+    { title: "Lot Number", field: "LotNumber" },
+    { title: "Company Name", field: "CompanyName" },
+    { title: "Additional Details", field: "AdditionalDetails" },
+    { title: "Total Carats", field: "TotalCarat", type: "numeric" },
     { title: "Date Given", field: "DateGiven", type: "date" },
     { title: "Date Received", field: "DateReceived", type: "date" },
   ]);
 
   const [records, setRecords] = useState([]);
-  const [LotId, setLotId] = useState();
   const [hasError, setHasError] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (props.currentLot._id == null) {
-      let idFromUrl = window.location.pathname.split("/")[2];
-      axios
-        .get(`http://localhost:8000/v2/api/asorter/${idFromUrl}`, {
-          mode: "cors",
-        })
-        .then((res) => {
-          console.log(res);
-          setRecords(res.data[0].Asorters);
-          setLotId(res.data[0]._id);
-          setLoading(false);
-        })
-        .catch((err) => {
-          setHasError(true);
-          setLoading(false);
-        });
-    } else {
-      setRecords(props.currentLot.Asorters);
-      setLotId(props.currentLot._id);
-    }
+    axios
+      .get(`http://localhost:8000/v2/api/lot/`, {
+        mode: "cors",
+      })
+      .then((res) => {
+        console.log(res);
+        setRecords(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setHasError(true);
+        setLoading(false);
+      });
   }, []);
   return (
     <div style={{}}>
+      <Navbar />
       <MaterialTable
         title="Records"
         columns={columns}
@@ -54,19 +47,19 @@ function AsorterComponent(props) {
                 setRecords([...records, newData]);
                 axios({
                   method: "post",
-                  url: `http://localhost:8000/v2/api/asorter/add/${LotId}`,
+                  url: "http://localhost:8000/v2/api/lot/add",
                   mode: "cors",
                   data: {
-                    AsorterName: newData.AsorterName,
-                    CaratGiven: newData.CaratGiven,
-                    DateGiven: newData.DateGiven,
-                    DateReceived: newData.DateReceived,
-                    CaratReceived: newData.CaratReceived,
+                    CompanyName: newData.CompanyName,
+                    TotalCarat: newData.TotalCarat,
+                    DateGiven: new Date(newData.DateGiven),
+                    DateReceived: new Date(newData.DateReceived),
+                    LotNumber: newData.LotNumber,
                     AdditionalDetails: newData.AdditionalDetails,
                   },
                 })
                   .then((res) => {
-                    console.log("Success status", res.data.success);
+                    console.log("Success", res.data.success);
                   })
                   .catch((err) => {
                     console.error(err);
@@ -82,14 +75,14 @@ function AsorterComponent(props) {
                 dataUpdate[index] = newData;
                 axios({
                   method: "post",
-                  url: `http://localhost:8000/v2/api/asorter/update/${LotId}/${oldData._id}`,
+                  url: `http://localhost:8000/v2/api/lot/update/${oldData._id}`,
                   mode: "cors",
                   data: {
-                    AsorterName: newData.AsorterName,
-                    CaratGiven: newData.CaratGiven,
+                    CompanyName: newData.CompanyName,
+                    TotalCarat: newData.TotalCarat,
                     DateGiven: newData.DateGiven,
                     DateReceived: newData.DateReceived,
-                    CaratReceived: newData.CaratReceived,
+                    LotNumber: newData.LotNumber,
                     AdditionalDetails: newData.AdditionalDetails,
                   },
                 })
@@ -111,7 +104,7 @@ function AsorterComponent(props) {
                 dataDelete.splice(index, 1);
                 axios
                   .delete(
-                    `http://localhost:8000/api/asorter/delete/${LotId}/${oldData._id}`,
+                    `http://localhost:8000/api/lot/delete/${oldData._id}`,
                     {
                       mode: "cors",
                     }
@@ -137,4 +130,4 @@ function AsorterComponent(props) {
   );
 }
 
-export default AsorterComponent;
+export default NewLot;

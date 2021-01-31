@@ -10,6 +10,7 @@ import {
 import { useState, useEffect } from "react";
 import SearchComponent from "./SearchComponent";
 import AsorterComponent from "./AsorterComponent";
+import NewLot from "./NewLot";
 import Navbar from "./Navbar";
 const axios = require("axios");
 
@@ -25,7 +26,7 @@ function LotList() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:8000/v2/api/records/", {
+      .get("http://localhost:8000/v2/api/lot/", {
         mode: "cors",
       })
       .then((res) => {
@@ -53,10 +54,7 @@ function LotList() {
       <Switch>
         <Route exact path="/">
           <Navbar />
-          <span>Set up router first</span>
-          <span>
-            Work on Asorter component and then setup API routes for asorter/id
-          </span>
+
           <div>
             <h4 style={{ textAlign: "center" }}>Lot List</h4>
             <div>
@@ -93,6 +91,9 @@ function LotList() {
         <Route path="/asorter/:id">
           <Navbar />
           <AsorterComponent currentLot={currentLot} />
+        </Route>
+        <Route path="/newLot">
+          <NewLot />
         </Route>
       </Switch>
     </Router>

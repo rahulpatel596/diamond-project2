@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const RecordV2 = require("../../../models/RecordV2");
 
-// @route GET '/api/records'
+// @route GET '/api/lot'
 // @desc Getting all records
 router.get("/", (req, res) => {
   RecordV2.find({}).then((records) => {
@@ -10,8 +10,8 @@ router.get("/", (req, res) => {
   });
 });
 
-// @route POST '/api/records'
-router.post("/", (req, res) => {
+// @route POST '/api/lot/add'
+router.post("/add", (req, res) => {
   const newRecordV2 = new RecordV2({
     CompanyName: req.body.CompanyName,
     LotNumber: req.body.LotNumber,
@@ -19,7 +19,6 @@ router.post("/", (req, res) => {
     DateReceived: req.body.DateReceived,
     DateGiven: req.body.DateGiven,
     AdditionalDetails: req.body.AdditionalDetails,
-    Asorters: [],
   });
 
   newRecordV2.save().then((record) => {
@@ -27,7 +26,7 @@ router.post("/", (req, res) => {
   });
 });
 
-// @route POST '/api/records/update/:id'
+// @route POST '/api/v2/lot/update/:id'
 router.post("/update/:id", (req, res) => {
   RecordV2.updateOne(
     { _id: req.params.id },
@@ -39,7 +38,6 @@ router.post("/update/:id", (req, res) => {
         DateGiven: req.body.DateGiven,
         DateReceived: req.body.DateReceived,
         TotalCarat: req.body.TotalCarat,
-        Asorters: [],
       },
     },
     function (err, record) {
@@ -53,7 +51,7 @@ router.post("/update/:id", (req, res) => {
 });
 
 // @route DELETE record by id
-router.delete("/:id", (req, res) => {
+router.delete("/delete/:id", (req, res) => {
   RecordV2.findById(req.params.id).then((record) => {
     record
       .remove()
