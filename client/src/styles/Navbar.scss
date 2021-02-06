@@ -17,22 +17,23 @@
   flex: 3;
 }
 
+.nav-add-button:hover {
+  color: white;
+}
+
 .nav-add-button button {
   border: 1px solid #0085ff;
-  color: white;
   background: transparent;
   border-radius: 6px;
   &:hover {
     background: #0085ff;
-    text-decoration: none;
-    color: white;
+    color: #fff;
     font-weight: bold;
   }
-  a {
-    &:hover {
-      color: white;
-      font-weight: bold;
-      text-decoration: none;
-    }
-  }
+}
+
+.nav-add-button button a:hover {
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
 }

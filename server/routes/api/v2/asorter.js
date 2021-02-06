@@ -53,6 +53,7 @@ router.post("/update/:lotId/:asorterId", (req, res) => {
         "Asorters.$.CaratReceived": req.body.CaratReceived,
         "Asorters.$.DateGiven": new Date(req.body.DateGiven),
         "Asorters.$.DateReceived": new Date(req.body.DateReceived),
+        "Asorters.$.AdditionalDetails": req.body.AdditionalDetails,
       },
     },
     function (err, record) {

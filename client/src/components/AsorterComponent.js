@@ -43,6 +43,7 @@ function AsorterComponent(props) {
   }, []);
   return (
     <div style={{}}>
+      <h3 style={{ textAlign: "center", paddingBottom: "3vh" }}>Asorters</h3>
       <MaterialTable
         title="Records"
         columns={columns}
@@ -111,7 +112,7 @@ function AsorterComponent(props) {
                 dataDelete.splice(index, 1);
                 axios
                   .delete(
-                    `http://localhost:8000/api/asorter/delete/${LotId}/${oldData._id}`,
+                    `http://localhost:8000/v2/api/asorter/delete/${LotId}/${oldData._id}`,
                     {
                       mode: "cors",
                     }

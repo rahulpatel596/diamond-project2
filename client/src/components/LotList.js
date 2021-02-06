@@ -1,5 +1,6 @@
 import LotInfoComponent from "./LotInfoComponent";
 import "../styles/LotInfoComponent.scss";
+import Pagination from "react-bootstrap/Pagination";
 import {
   BrowserRouter as Router,
   Switch,
@@ -7,7 +8,9 @@ import {
   Link,
   useParams,
 } from "react-router-dom";
+
 import { useState, useEffect } from "react";
+
 import SearchComponent from "./SearchComponent";
 import AsorterComponent from "./AsorterComponent";
 import NewLot from "./NewLot";
@@ -22,6 +25,12 @@ function LotList() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentLot, setCurrentLot] = useState({});
   const [ReceivedLotInfo, setReceivedLotInfo] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [recordsPerPage, setRecordsPerPage] = useState(3);
+
+  const indexOfLastRecord = currentPage * recordsPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+  const currentRecords = records.slice(indexOfFirstRecord, indexOfLastRecord);
 
   useEffect(() => {
     setLoading(true);
@@ -49,6 +58,18 @@ function LotList() {
     console.log(dataFromChild);
   };
 
+  let pages = [];
+  for (
+    let number = 1;
+    number <= Math.ceil(records.length / recordsPerPage);
+    number++
+  ) {
+    pages.push(
+      <Pagination.Item key={number} onClick={() => setCurrentPage(number)}>
+        {number}
+      </Pagination.Item>
+    );
+  }
   return (
     <Router>
       <Switch>
@@ -61,7 +82,7 @@ function LotList() {
               <SearchComponent PassSearchTerm={receivedSearchTerm} />
             </div>
             <div className="lot-outer-container">
-              {records
+              {currentRecords
                 .filter((lot) => {
                   return (
                     lot.CompanyName.toLowerCase().includes(
@@ -87,6 +108,7 @@ function LotList() {
                 ))}
             </div>
           </div>
+          <Pagination style={{ justifyContent: "center" }}>{pages}</Pagination>
         </Route>
         <Route path="/asorter/:id">
           <Navbar />

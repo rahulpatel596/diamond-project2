@@ -11,12 +11,12 @@ function LotInfoComponent(props) {
           <span className="lot-info-additionalDetails">
             {props.lot.AdditionalDetails}
           </span>
+          <span>{props.lot.DateReceived.slice(0, 10)}</span>
         </div>
         <div className="lot-info-right">
           <span className="lot-info-totalCarat">{props.lot.TotalCarat}</span>
         </div>
 
-        {/* <span>{props.lot.DateReceived}</span> */}
         {/* <span>{props.lot.DateGiven}</span> */}
       </div>
     </div>

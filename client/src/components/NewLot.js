@@ -104,7 +104,7 @@ function NewLot(props) {
                 dataDelete.splice(index, 1);
                 axios
                   .delete(
-                    `http://localhost:8000/api/lot/delete/${oldData._id}`,
+                    `http://localhost:8000/v2/api/lot/delete/${oldData._id}`,
                     {
                       mode: "cors",
                     }
