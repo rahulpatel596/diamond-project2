@@ -30,7 +30,7 @@ function LotList() {
 
   const indexOfLastRecord = currentPage * recordsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
-  const currentRecords = records.slice(indexOfFirstRecord, indexOfLastRecord);
+  const currentRecords = records ? records.slice(indexOfFirstRecord, indexOfLastRecord);
 
   useEffect(() => {
     setLoading(true);
